@@ -1,0 +1,87 @@
+Part 1:
+
+Let S = it is sunny, C = camping is fun, H = the homework is
+done, and M = mathematics is easy.
+
+- If mathematics is easy then the homework is done & if it is sunny then camping is fun.
+
+- (S ^ H) -> (M v C) 
+
+Part 2:
+
+- (¬B → ¬A) → ((¬B → A) → B)
+
+|A|	|B|	|¬A|	|¬B|	|¬B -> ¬A|	|¬B -> A| 	|((¬B -> A) -> B)| |(¬B → ¬A) → ((¬B → A) → B)|
+|T|	|T|	|F |	|F |	|T	 |	     |T	|	      |T	       |            |T			    |
+|T|	|F|	|F |	|T |	|F	 |	     |T	|	      |F	       |            |T			    |
+|F|	|T|	|T |	|F |	|T	 |	     |T	|	      |T	       |            |T			    |
+|F|	|F|	|T |	|T |	|T	 |	     |F	|	      |T	       |            |T			    |
+(Tautology)
+
+- ((A → B)∧(B → ¬A)) → A
+
+|A|	|B|	|¬A|	|A -> B| |B -> ¬A| |((A → B)∧(B → ¬A))| |((A → B)∧(B → ¬A)) → A|
+|T|	|T|	|F |	|T     | |F      | |F		      |	        |T		       |
+|T|	|F|	|F |	|F     | |T      | |T         |         |T           |
+|F|	|T|	|T |	|T     | |T      | |T		      |         |F		       | 
+|F|	|F|	|T |	|T     | |T      | |T		      |         |F		       |
+(Neither)
+
+Part 3:
+
+For each of the following pairs of propositions, show that the
+two propositions are logically equivalent by finding a chain of equivalences from one
+to the other. State which definition or law of logic justifies each equivalence in the
+chain.
+
+- (p ∧ q) → r, p → (q → r)
+(p ∧ q) → r <=> p → (q → r) assume they're equiv
+(p ∧ q)' v r <=> p → (q → r) implication
+(p' v q') v r <=> p → (q → r) demorgan
+p' v (q' v r) <=> p → (q → r) associative
+p -> (q' v r) <=> p → (q → r) implication
+p -> (q -> r) <=> p → (q → r) implication
+
+- (q ∨ r) → p, (q → p) ∧ (r → p)
+(q ∨ r) → p <=> (q → p) ∧ (r → p) assume they're equiv
+(q ∨ r)' v p <=> (q → p) ∧ (r → p) implication
+(q' ^ r') v p <=> (q → p) ∧ (r → p) demorgan
+(q' v p) ^ (r' v p) <=> (q → p) ∧ (r → p) distributive
+(q -> p) ^ (r -> p) <=> (q → p) ∧ (r → p) implication
+
+Part 4:
+
+Let Loves(x,y) mean “x loves y,” Traveler(x) mean “x is a traveler,”
+City(x) mean “x is a city,” Lives(x,y) mean “x lives in y.”
+
+- There is a city that all the travelers love and everyone who lives there does not love.
+
+- ∀x∀y(Traveler(x) ^ City(y) ^ Lives(x,y)) -> ~Loves(x,y)
+
+EC:
+
+Assuming: p → (q ∧ r), s → r , r → p
+Prove: s → q
+
+- s -> r -> p -> (q ^ r) 
+p -> (q ^ r)
+s Assumption
+(q ^ r) Modus Ponens 
+s -> r
+r Modus Ponens
+r -> p
+p Modus Ponens
+q Identity
+s -> q 
+
+Modus Ponen: If x -> q, and x, then q
+Modus Tollens: If x -> q, and ~q, then ~x
+
+Assuming: ¬(r ∨ s), ¬p → s, p → q. 
+Prove: q
+
+- (r` ^ s`) Demorgan
+s` Domination
+(p`)` Modus Tollens
+p Double Negation
+q Modus Ponens
