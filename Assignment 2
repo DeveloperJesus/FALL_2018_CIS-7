@@ -1,0 +1,15 @@
+p -> q <=> q' -> p'
+p' v q <=> q' -> p' imp
+p' v q <=> q v p' imp
+p' v q <=> p' v q com
+
+(p -> r) ^ (q -> r) <=> (p v q) -> r
+(p' v r) ^ (q' v r) <=> (p v q)' v r -impx3
+(p' v r) ^ (q' v r) <=> (p' ^ q') v r -demorgan
+(p' v r) ^ (q' v r) <=> (p' v r) ^ (q' v r) -distrib
+
+(Ǝx)A(x) ^ (Ǝx)B(x) -> (Ǝx)(A(x) ^ B(x))
+x = the set of all animals
+A(x) = x is a dog
+B(x) = x is a cat
+There exists in the set of all animals an animal which is a dog & there exists in the set of all animals which is a cat, which implies that there exists in the set of all animals an animal which is a dog & a cat.
