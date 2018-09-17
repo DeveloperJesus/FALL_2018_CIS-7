@@ -1,0 +1,242 @@
+Parser (V.1):
+#include <iostream>
+#include <string>
+#include <cstdlib>
+
+int main()
+{
+	std::string input;
+	const std::string parenthesis = "()";
+	const std::string connectors = "~`^Vv=>";
+	const std::string statements = "ABCDEFGHIJKLMNOPQRSTUWXYZabcdefghijklmnopqrstuwxyz";
+	int uPC = 0; // uPC = unbalancedParenthesisCounter
+	int sCount = 0; //statementCounter
+	bool isAWFF = true;
+
+	while (input != "0")
+	{
+		std::cout << "Enter a string, type in '0' to exit: ";
+		getline(std::cin, input);
+
+		if (input == "0")
+			return 0;
+		else if (input.length() < 5)
+			isAWFF = false;
+		else
+		{
+			for (int i = 0; i < input.length(); i++) 
+			{
+				char c = input[i];
+
+				if (c == ' ')
+					continue;
+				else if (parenthesis.find(c) != std::string::npos)
+				{
+					if (c == '(')
+					{
+						if (i - 1 >= 0)
+						{
+							if (input[i - 1] == '(' || input[i - 1] == ' ')
+							{
+								//cout << "This " << c << " has an opening parenthesis/blank space behind it, which is valid" << endl;
+								uPC++;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+
+						if (i + 1 <= input.length() - 1)
+						{
+							if (input[i + 1] == '(' || statements.find(input[i + 1]) != std::string::npos || input[i + 1] == '~' || input[i + 1] == '`')
+							{
+								//cout << "This " << c << " has an opening parenthesis/statement in front of it, which is valid" << endl;
+								uPC++;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+					}
+					else if (')')
+					{
+						if (i - 1 >= 0)
+						{
+							if (input[i - 1] == ')' || statements.find(input[i - 1]) != std::string::npos)
+							{
+								//cout << "This " << c << " has a closing parenthesis/statement behind it, which is valid" << endl;
+								uPC--;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+
+						if (i + 1 <= input.length() - 1)
+						{
+							if (input[i + 1] == ')' || input[i + 1] == ' ')
+							{
+								//cout << "This " << c << " has an opening parenthesis/blank space in front of it, which is valid" << endl;
+								uPC--;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+					}
+				}
+				else if (connectors.find(c) != std::string::npos)
+				{
+					if (c == '~' || c == '`')
+					{
+						if (i + 1 <= input.length())
+						{
+							if (statements.find(input[i + 1]) != std::string::npos)
+							{
+								//cout << "Char in front of " << c << " is a letter, which is valid" << endl;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+						else
+						{
+							isAWFF = false;
+							break;
+						}
+
+						if (i - 1 >= 0)
+						{
+							if (input[i - 1] == ' ' || input[i - 1] == '(' || input[i - 1] == ')')
+							{
+								//cout << "Char behind " << c << " is blank/opening parenthesis, which is valid" << endl;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+					}
+					else if (c == '^' || c == 'V' || c == 'v')
+					{
+						if (i + 1 <= input.length() - 1 && i - 1 >= 0)
+						{
+							if (input[i + 1] == ' ' && input[i - 1] == ' ')
+							{
+								//cout << "Chars behind and in front of " << c << " are blank, which is valid" << endl;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+						else
+						{
+							isAWFF = false;
+							break;
+						}
+					}
+					else if (c == '=')
+					{
+						if (i - 1 >= 0 && i + 1 <= input.length() - 1)
+						{
+							if (input[i - 1] == ' ' && input[i + 1] == '>')
+							{
+								//cout << "The char behind " << c << " is a blank & the char in front of it is a '>', which is valid" << endl;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+						else
+						{
+							isAWFF = false;
+							break;
+						}
+					}
+					else if (c == '>')
+					{
+						if (i - 1 >= 0 && i + 1 <= input.length() - 1)
+						{
+							if (input[i - 1] == '=' && input[i + 1] == ' ')
+							{
+								//cout << "The char behind " << c << " is an '=' & the char in front of it is a blank, which is valid" << endl;
+							}
+							else
+							{
+								isAWFF = false;
+								break;
+							}
+						}
+						else
+						{
+							isAWFF = false;
+							break;
+						}
+					}
+				}
+				else if (statements.find(c) != std::string::npos)
+				{
+					sCount++;
+					if (i - 1 >= 0)
+					{
+						if (input[i - 1] == '~' || input[i - 1] == '`' || input[i - 1] == ' ' || input[i - 1] == '(')
+						{
+							//cout << "Char behind " << c << " is a logical not/blank space/opening parenthesis, which is valid" << endl;
+						}
+						else
+						{
+							isAWFF = false;
+							break;
+						}
+					}
+
+					if (i + 1 <= input.length() - 1)
+					{
+						if (input[i + 1] == ' ' || input[i + 1] == ')')
+						{
+							//cout << "Char in front of " << c << " is a blank space/closing parenthesis, which is valid" << endl;
+						}
+						else
+						{
+							isAWFF = false;
+							break;
+						}
+					}
+				}
+				else
+				{
+					isAWFF = false;
+					break;
+				}
+			}
+		}
+		if (uPC != 0)
+		{
+			isAWFF = false;
+			uPC = 0;
+		}
+		if (sCount >= 2 && isAWFF)
+			std::cout << "This input IS a WFF.\n";
+		else
+			std::cout << "This input IS NOT a WFF.\n";
+		sCount = 0;
+		system("pause");
+		system("CLS");
+	}
+	return 0;
+}
