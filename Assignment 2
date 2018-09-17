@@ -1,4 +1,4 @@
-Logic Question:
+Logic Questions:
 p -> q <=> q' -> p'
 p' v q <=> q' -> p' imp
 p' v q <=> q v p' imp
