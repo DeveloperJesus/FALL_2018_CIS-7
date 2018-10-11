@@ -25,7 +25,7 @@ int main()
 {
 	std::string input;
 	const std::string parenthesis = "()";
-	const std::string connectors = "~`^Vv=>";
+	const std::string connectors = "~`^Vv=->";
 	const std::string statements = "ABCDEFGHIJKLMNOPQRSTUWXYZabcdefghijklmnopqrstuwxyz";
 
 	while (input != "0")
