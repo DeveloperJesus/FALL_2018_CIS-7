@@ -1,0 +1,95 @@
+#include <vector>
+#include <iostream>
+#include <string>
+
+void towerOfHanoi(int, char, char, char, std::vector<int>&, std::vector<int>&, std::vector<int>&);
+void removeDisk(char, std::vector<int>&, std::vector<int>&, std::vector<int>&);
+void addDisk(int, char, std::vector<int>&, std::vector<int>&, std::vector<int>&);
+void printTowers(std::vector<int>&, std::vector<int>&, std::vector<int>&);
+
+int main()
+{
+	std::vector<int> towerA, towerB, towerC;
+	int numOfDisks;
+
+	std::cout << "How many disks would you like to use? ";
+	std::cout << "Number of Disks: ";
+	std::cin >> numOfDisks;
+
+	for (int i = 0; i < numOfDisks; i++)
+		towerA.push_back(i + 1);
+
+	printTowers(towerA, towerB, towerC);
+
+	towerOfHanoi(numOfDisks, 'A', 'C', 'B', towerA, towerB, towerC);
+
+	system("pause");
+
+	return 0;
+}
+
+void towerOfHanoi(int n, char from_rod, char to_rod, char aux_rod, std::vector<int>&towerA, std::vector<int>&towerB, std::vector<int>&towerC)
+{
+	if (n == 1)
+	{
+		removeDisk(from_rod, towerA, towerB, towerC);
+		addDisk(n, to_rod, towerA, towerB, towerC);
+		printTowers(towerA, towerB, towerC);
+
+		std::cout << "Move disk " << n << " from rod " << from_rod << " to rod " << to_rod << std::endl;
+		return;
+	}
+
+	towerOfHanoi(n - 1, from_rod, aux_rod, to_rod, towerA, towerB, towerC);
+
+	removeDisk(from_rod, towerA, towerB, towerC);
+	addDisk(n, to_rod, towerA, towerB, towerC);
+	printTowers(towerA, towerB, towerC);
+
+	std::cout << "Move disk " << n << " from rod " << from_rod << " to rod " << to_rod << std::endl;
+
+	towerOfHanoi(n - 1, aux_rod, to_rod, from_rod, towerA, towerB, towerC);
+}
+
+void removeDisk(char from_rod, std::vector<int>&towerA, std::vector<int>&towerB, std::vector<int>&towerC)
+{
+	if (from_rod == 'A')
+		towerA.pop_back();
+	else if (from_rod == 'B')
+		towerB.pop_back();
+	else if (from_rod == 'C')
+		towerC.pop_back();
+}
+
+void addDisk(int n, char to_rod, std::vector<int>&towerA, std::vector<int>&towerB, std::vector<int>&towerC)
+{
+	if (to_rod == 'A')
+		towerA.push_back(n);
+	else if (to_rod == 'B')
+		towerB.push_back(n);
+	else if (to_rod == 'C')
+		towerC.push_back(n);
+}
+
+void printTowers(std::vector<int>&towerA, std::vector<int>&towerB, std::vector<int>&towerC)
+{
+	std::cout << "Press Enter to see the next move." << std::endl;
+	std::cin.get();
+	system("cls");
+
+	std::cout << "Tower  A: ";
+	for (int i = 0; i < towerA.size(); i++)
+		std::cout << towerA.at(i) << "-";
+
+	std::cout << std::endl;
+	std::cout << "Tower  B: ";
+	for (int i = 0; i < towerB.size(); i++)
+		std::cout << towerB.at(i) << "-";
+
+	std::cout << std::endl;
+	std::cout << "Tower  C: ";
+	for (int i = 0; i < towerC.size(); i++)
+		std::cout << towerC.at(i) << "-";
+
+	std::cout << std::endl;
+}
